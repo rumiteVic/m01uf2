@@ -31,7 +31,27 @@ then
 	exit 2
 fi
 
-echo "6. ENVIANDO OK_FILE_NAME" | nc localhost $PORT
+echo "6. ENVIANDO OK_FILE_NAME"
 
 echo "OK_FILE_NAME" | nc localhost $PORT
 
+echo "9. RECIBIENDO UN ARCHIVO"
+DATA=`nc -l $PORT`
+WHAT=`cat ./server/dragon.txt`
+echo $WHAT
+COMPROBACION=`echo $WHAT | md5sum`
+echo $COMPROBACION
+
+echo "10. COMPROBANDO DRAGON"
+if [ "$DATA" != "$COMPROBACION" ]
+then
+	echo "ERROR 3: Dragon incorrecto"
+	echo "KO_DRAGON" | nc localhost $PORT
+	exit 3
+fi
+
+echo "11. ENVIANDO DRAGON"
+echo "OK_DRAGON" | nc localhost $PORT
+
+echo "12. FIN DRAGON"
+DATA=`nc -l $PORT`

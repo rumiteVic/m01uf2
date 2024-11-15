@@ -20,7 +20,23 @@ echo "4. Enviando el FILE_NAME"
 
 FILE_NAME="dragon.txt"
 
-echo "FIPE_NAME $FILE_NAME" | nc localhost $PORT
+echo "FILE_NAME $FILE_NAME" | nc localhost $PORT
 
+echo "7. RECIBIENDO OK_FILE_NAME"
 DATA=`nc -l $PORT`
 
+echo "8. ENVIANDO UN ARCHIVO"
+MD5=`cat ./client/dragon.txt`
+echo $MD5
+ENVIANDO=`echo $MD5 | md5sum`
+echo $ENVIANDO
+echo $ENVIANDO| nc localhost $PORT
+
+echo "9.RECIBIENDO OK_DRAGON"
+DATA=`nc -l $PORT`
+if [ "$DATA" != "OK_DRAGON" ]
+then
+	echo "ERROR 4: No dragon"
+	echo "KO_DRAGON"
+	exit 4
+fi
