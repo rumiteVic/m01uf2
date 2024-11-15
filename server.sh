@@ -27,8 +27,11 @@ echo $DATA
 if [ "$PREFIX" != "FILE_NAME" ]
 then
 	echo "ERROR 2: Prefijo incorrecto"
-	echo "KO_FILE_NAME" | nc localhost 2022
+	echo "KO_FILE_NAME" | nc localhost $PORT
 	exit 2
 fi
 
-echo "OK_FILE_NAME" | nc localhost  2022
+echo "6. ENVIANDO OK_FILE_NAME" | nc localhost $PORT
+
+echo "OK_FILE_NAME" | nc localhost $PORT
+
